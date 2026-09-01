@@ -1,0 +1,97 @@
+.form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.input {
+  width: 160px;
+  font-variant-numeric: tabular-nums;
+}
+
+.submitBtn {
+  padding: 6px 16px;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  transition: opacity var(--transition);
+}
+.submitBtn:hover { opacity: 0.85; }
+
+.validationMsg {
+  font-size: 12px;
+  color: var(--danger);
+  margin-bottom: 12px;
+}
+
+.prompt {
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 32px 0;
+}
+
+.chartSection {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.chartHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chartTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.seriesToggle {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 11px;
+  transition: all var(--transition);
+}
+.toggleBtn::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot-color, var(--border));
+  opacity: 0.4;
+}
+.toggleActive {
+  border-color: var(--dot-color, var(--accent));
+  color: var(--text);
+}
+.toggleActive::before { opacity: 1; }
+
+.tableSection {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+.tableSection .chartTitle { margin-bottom: 12px; }

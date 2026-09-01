@@ -1,0 +1,151 @@
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+.refreshBtn {
+  padding: 6px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  color: var(--text);
+  font-size: 12px;
+  transition: border-color var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.refreshBtn:hover:not(:disabled) { border-color: var(--accent); }
+.refreshBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Health banner ─────────────────────────────────────────────────── */
+.healthBanner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+  border: 1px solid transparent;
+}
+.healthOk   { background: #0d2218; border-color: var(--ok);     }
+.healthFail { background: var(--danger-dim); border-color: var(--danger); }
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px currentColor;
+}
+
+.healthLabel {
+  font-size: 14px;
+  font-weight: 600;
+  flex: 1;
+}
+
+/* ── Reasons ───────────────────────────────────────────────────────── */
+.reasons {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.reason {
+  font-size: 12px;
+  color: var(--warn);
+  padding: 6px 12px;
+  border-radius: var(--radius);
+  background: #3d2a00;
+  border: 1px solid var(--warn);
+}
+
+/* ── KPI grid ──────────────────────────────────────────────────────── */
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* ── Task table ────────────────────────────────────────────────────── */
+.taskSection {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.taskTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.noTasks { font-size: 13px; color: var(--text-muted); }
+
+.taskTableWrap { overflow-x: auto; }
+.taskTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.taskTable th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+.taskTable td {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.taskTable tbody tr:last-child td { border-bottom: none; }
+
+.taskName { color: var(--text); }
+
+.taskStatus {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.taskOk   { background: #0d2218; color: var(--ok);     border: 1px solid var(--ok);     }
+.taskFail { background: var(--danger-dim); color: var(--danger); border: 1px solid var(--danger); }
+
+/* ── Run metadata ──────────────────────────────────────────────────── */
+.metaGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  min-width: 160px;
+}
+.metaKey {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+.metaVal {
+  font-size: 13px;
+  font-family: var(--font-mono);
+  color: var(--text);
+}

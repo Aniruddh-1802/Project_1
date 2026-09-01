@@ -1,0 +1,2 @@
+# Drop milano-grid.geojson into this folder.
+# The hotspot map loads it from /reference/milano-grid.geojson at runtime.

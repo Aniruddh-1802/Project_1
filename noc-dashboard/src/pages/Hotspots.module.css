@@ -1,0 +1,100 @@
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.controlLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.controlLabel select { min-width: 100px; }
+
+.selectedInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px 12px;
+}
+
+.clearBtn {
+  color: var(--text-muted);
+  font-size: 12px;
+  padding: 0 4px;
+  transition: color var(--transition);
+}
+.clearBtn:hover { color: var(--danger); }
+
+.exploreBtn {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  transition: opacity var(--transition);
+}
+.exploreBtn:hover { opacity: 0.8; }
+
+.mapSection { margin-bottom: 24px; }
+
+.geoNote {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+.geoNote code {
+  font-family: var(--font-mono);
+  background: var(--surface-alt);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.tableSection {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.tableTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tableCount {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-muted);
+  background: var(--surface-alt);
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+}
+
+.gridLink {
+  color: var(--accent);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  transition: opacity var(--transition);
+}
+.gridLink:hover { opacity: 0.75; }
+
+.reason {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
