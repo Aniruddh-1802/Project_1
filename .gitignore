@@ -1,0 +1,10 @@
+# Data files
+data/
+outputs/
+
+# CSV files
+*.csv
+*.crc
+
+# Spark artifacts
+.crc

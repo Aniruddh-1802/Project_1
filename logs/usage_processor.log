@@ -1,0 +1,49 @@
+2026-08-27 14:13:43,889 | INFO | UsageProcessor | Loaded 1891928 records
+2026-08-27 14:13:44,182 | INFO | UsageProcessor | Dropped 0 rows due to missing timestamp/grid_id
+2026-08-27 14:13:45,376 | INFO | UsageProcessor | Created analytics dataset with 240000 rows
+2026-08-27 14:13:45,896 | INFO | UsageProcessor | Daily summary exported to outputs/daily_summary.csv
+2026-08-27 14:13:45,896 | INFO | UsageProcessor | Grid summary exported to outputs/grid_summary.csv
+2026-08-28 10:53:02,377 | INFO | UsageProcessor | Loaded 1891928 records
+2026-08-28 10:53:02,704 | INFO | UsageProcessor | Dropped 0 rows due to missing timestamp/grid_id
+2026-08-28 10:53:03,967 | INFO | UsageProcessor | Created analytics dataset with 240000 rows
+2026-08-28 10:53:40,821 | INFO | UsageProcessor | Loaded 1891928 records
+2026-08-28 10:53:41,142 | INFO | UsageProcessor | Dropped 0 rows due to missing timestamp/grid_id
+2026-08-28 10:53:42,406 | INFO | UsageProcessor | Created analytics dataset with 240000 rows
+2026-08-28 10:53:43,131 | INFO | UsageProcessor | Daily summary exported to outputs/daily_summary.csv
+2026-08-28 10:53:43,131 | INFO | UsageProcessor | Grid summary exported to outputs/grid_summary.csv
+2026-08-28 10:53:45,322 | INFO | UsageProcessor | Analytics exported to outputs/grid_hour_analytics.csv
+2026-08-31 11:34:33,169 | INFO | UsageProcessor | Loaded 1891928 records
+2026-08-31 11:34:33,488 | INFO | UsageProcessor | Dropped 0 rows due to missing timestamp/grid_id
+2026-08-31 11:34:34,820 | INFO | UsageProcessor | Created analytics dataset with 240000 rows
+2026-08-31 11:37:35,841 | INFO | UsageProcessor | Loaded 1891928 records
+2026-08-31 11:37:36,131 | INFO | UsageProcessor | Dropped 0 rows due to missing timestamp/grid_id
+2026-08-31 11:37:37,276 | INFO | UsageProcessor | Created analytics dataset with 240000 rows
+2026-08-31 11:38:00,955 | INFO | py4j.clientserver | Closing down clientserver connection
+2026-08-31 11:41:50,490 | INFO | UsageProcessor | Loaded 1891928 records
+2026-08-31 11:41:50,688 | INFO | UsageProcessor | Dropped 0 rows due to missing timestamp/grid_id
+2026-08-31 11:41:51,458 | INFO | UsageProcessor | Created analytics dataset with 240000 rows
+2026-08-31 11:41:59,826 | INFO | py4j.clientserver | Closing down clientserver connection
+2026-08-31 11:48:27,785 | INFO | UsageProcessor | Loaded 1891928 records
+2026-08-31 11:48:28,143 | INFO | UsageProcessor | Dropped 0 rows due to missing timestamp/grid_id
+2026-08-31 11:48:29,247 | INFO | UsageProcessor | Created analytics dataset with 240000 rows
+2026-08-31 11:48:37,984 | INFO | py4j.clientserver | Closing down clientserver connection
+2026-08-31 11:52:19,752 | INFO | UsageProcessor | Loaded 1891928 records
+2026-08-31 11:52:19,950 | INFO | UsageProcessor | Dropped 0 rows due to missing timestamp/grid_id
+2026-08-31 11:52:20,868 | INFO | UsageProcessor | Created analytics dataset with 240000 rows
+2026-08-31 11:52:29,023 | INFO | py4j.clientserver | Closing down clientserver connection
+2026-08-31 11:55:54,609 | INFO | UsageProcessor | Loaded 1891928 records
+2026-08-31 11:55:54,851 | INFO | UsageProcessor | Dropped 0 rows due to missing timestamp/grid_id
+2026-08-31 11:55:55,776 | INFO | UsageProcessor | Created analytics dataset with 240000 rows
+2026-08-31 11:56:08,169 | INFO | py4j.clientserver | Closing down clientserver connection
+2026-08-31 12:01:45,431 | INFO | UsageProcessor | Loaded 1891928 records
+2026-08-31 12:01:45,659 | INFO | UsageProcessor | Dropped 0 rows due to missing timestamp/grid_id
+2026-08-31 12:01:46,602 | INFO | UsageProcessor | Created analytics dataset with 240000 rows
+2026-08-31 12:01:58,862 | INFO | py4j.clientserver | Closing down clientserver connection
+2026-08-31 12:04:15,404 | INFO | UsageProcessor | Loaded 1891928 records
+2026-08-31 12:04:15,584 | INFO | UsageProcessor | Dropped 0 rows due to missing timestamp/grid_id
+2026-08-31 12:04:16,560 | INFO | UsageProcessor | Created analytics dataset with 240000 rows
+2026-08-31 12:04:36,414 | INFO | py4j.clientserver | Closing down clientserver connection
+2026-08-31 12:16:58,674 | INFO | UsageProcessor | Loaded 1891928 records
+2026-08-31 12:16:58,940 | INFO | UsageProcessor | Dropped 0 rows due to missing timestamp/grid_id
+2026-08-31 12:17:00,094 | INFO | UsageProcessor | Created analytics dataset with 240000 rows
+2026-08-31 12:17:17,332 | INFO | py4j.clientserver | Closing down clientserver connection
