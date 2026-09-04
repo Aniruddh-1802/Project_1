@@ -1,0 +1,10 @@
+{
+  "_comment": "C13: the APPROVED MCP configuration from C12 — the thin-wrapper server only. No other MCP servers are team-standard.",
+  "mcpServers": {
+    "network-intelligence": {
+      "command": "python",
+      "args": ["mcp/network_mcp_server.py"],
+      "env": { "NETWORK_API_BASE": "${NETWORK_API_BASE}" }
+    }
+  }
+}

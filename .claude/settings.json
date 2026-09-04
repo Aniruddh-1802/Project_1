@@ -1,0 +1,64 @@
+{
+  "_comment_c6": "C6 — Permissions & Security Model. Learner-owned governance artifact, committed to the repository (acceptance criterion). Classifications: ALLOW safe reads/tests/formatting; ASK for dependency, DAG/pipeline-config and migration changes; DENY raw-data deletion, secrets and destructive DB ops. Each deny/ask prevents a named failure — see network-intelligence/docs/c6_permission_policy.md. Relocated to the repository root (project_1/.claude/) so it actually activates for a Claude Code session rooted here; paths below are project_1-root-relative, matching the real folder names (FastAPI/, not api/; Data Engineering/, not airflow/).",
+  "permissions": {
+    "allow": [
+      "Read(**)",
+      "Bash(pytest*)",
+      "Bash(python -m pytest*)",
+      "Bash(curl*)",
+      "Bash(ruff*)",
+      "Bash(black*)",
+      "Bash(ls*)",
+      "Bash(git status*)",
+      "Bash(git diff*)"
+    ],
+    "ask": [
+      "Bash(pip install*)",
+      "Bash(uv add*)",
+      "Bash(npm install*)",
+      "Edit(Data Engineering/**)",
+      "Edit(.env.example)",
+      "Edit(FastAPI/main.py)",
+      "Bash(alembic*)",
+      "Bash(psql*)",
+      "Bash(mysql*)",
+      "Edit(requirements.txt)"
+    ],
+    "deny": [
+      "Bash(rm -rf*)",
+      "Bash(rm * data/raw/*)",
+      "Edit(data/raw/**)",
+      "Write(data/raw/**)",
+      "Read(.env)",
+      "Read(**/.env)",
+      "Bash(* DROP TABLE*)",
+      "Bash(* TRUNCATE*)",
+      "Bash(rm * data/**)"
+    ]
+  },
+  "_comment_c10": "C10 — Hooks & Event-Driven Workflows. PostToolUse hook: after edits under spark/ or Machine_learning/, run the grain duplicate check ((grid_id, timestamp) on hourly_grid_summary) and the ML2 feature-leakage test — the two silent, expensive failures that must never wait for CI. PreToolUse hook: explicit confirmation before touching Data Engineering/ DAGs or pipeline configuration. All outcomes logged to logs/hook_outcomes.log.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/run_grain_and_leakage_tests.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/confirm_pipeline_edit.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

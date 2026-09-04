@@ -1,6 +1,7 @@
 import { useApi } from '../api/useApi.js';
 import { fetchNetworkSummary } from '../api/client.js';
 import { Loading, ErrorBanner, MetricCard, SectionHead, AsOfChip } from '../components/UI.jsx';
+import TopMovers from '../components/TopMovers.jsx';
 import styles from './Overview.module.css';
 
 function fmt(n) {
@@ -59,6 +60,8 @@ export default function Overview() {
             call counts or megabytes. High activity is an operational attention
             signal, not a confirmed fault.
           </div>
+
+          <TopMovers asOf={data.as_of} />
         </>
       )}
     </div>

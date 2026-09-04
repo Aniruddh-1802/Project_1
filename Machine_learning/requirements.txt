@@ -1,0 +1,25 @@
+# Network Operations Predictive Intelligence - ML Phase Dependencies
+# Install with: pip install -r requirements.txt
+
+# Data Processing
+pandas>=1.3.0
+numpy>=1.21.0
+pyarrow>=6.0.0  # For Parquet I/O
+
+# Machine Learning
+scikit-learn>=1.0.0
+
+# Utilities
+python-dateutil>=2.8.0
+
+# Optional: Database connectivity
+sqlalchemy>=1.4.0
+psycopg2-binary>=2.9.0  # PostgreSQL adapter
+pymysql>=1.0.0  # MySQL adapter
+
+# Optional: Visualization (for notebooks)
+matplotlib>=3.4.0
+seaborn>=0.11.0
+
+# Development
+pytest>=6.2.0  # Testing

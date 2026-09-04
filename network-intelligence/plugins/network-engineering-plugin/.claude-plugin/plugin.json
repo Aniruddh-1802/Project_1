@@ -1,0 +1,6 @@
+{
+  "name": "network-engineering",
+  "version": "1.0.0",
+  "description": "Team-standard Claude configuration for the Network Operations & Predictive Intelligence platform: CLAUDE.md rules (C4), skills (C8), slash commands (C7), hooks (C10) and approved MCP config (C12). Packaged in Lab C13 so no engineer recreates these by hand.",
+  "author": { "name": "NOC Platform Team" }
+}

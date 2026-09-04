@@ -15,7 +15,10 @@ from models import (
     AlertResponse,
     GridFeaturesResponse,
     RiskPredictionRequest,
-    RiskPredictionResponse
+    RiskPredictionResponse,
+    PipelineStatusResponse,
+    GridLocationResponse,
+    TopMoversResponse
 )
 
 from services import (
@@ -183,5 +186,85 @@ def predict_risk(
             status_code=500,
             detail=
             f"Unable to generate prediction: "
+            f"{str(ex)}"
+        )
+
+
+@router.get(
+    "/pipeline/status",
+    response_model=
+    PipelineStatusResponse
+)
+def pipeline_status():
+
+    try:
+
+        return service.get_pipeline_status()
+
+    except Exception as ex:
+
+        raise HTTPException(
+            status_code=500,
+            detail=
+            f"Unable to read pipeline status: "
+            f"{str(ex)}"
+        )
+
+
+@router.get(
+    "/network/grid/{grid_id}/location",
+    response_model=
+    GridLocationResponse
+)
+def get_grid_location(
+    grid_id: int
+):
+
+    try:
+
+        return service.get_grid_location(
+            grid_id
+        )
+
+    except HTTPException:
+
+        raise
+
+    except Exception as ex:
+
+        raise HTTPException(
+            status_code=500,
+            detail=
+            f"Unable to retrieve grid location: "
+            f"{str(ex)}"
+        )
+
+
+@router.get(
+    "/network/top-movers",
+    response_model=
+    TopMoversResponse
+)
+def top_movers(
+
+    limit: int = Query(10, ge=1, le=50),
+
+    as_of: datetime | None = None
+
+):
+
+    try:
+
+        return service.get_top_movers(
+            limit=limit,
+            as_of=as_of
+        )
+
+    except Exception as ex:
+
+        raise HTTPException(
+            status_code=500,
+            detail=
+            f"Unable to retrieve top movers: "
             f"{str(ex)}"
         )

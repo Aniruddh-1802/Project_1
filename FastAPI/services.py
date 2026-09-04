@@ -1,9 +1,20 @@
 from sqlalchemy import text
 
-from datetime import timedelta, datetime
+import json
+from pathlib import Path
+
+from datetime import timedelta, datetime, timezone
 
 from fastapi import HTTPException
 from sqlalchemy import text
+
+# logs/pipeline_status_latest.json lives at the project root, one level
+# above this FastAPI/ package - written by the DE7 Airflow DAG's
+# quality_check task. This service only reads and reshapes that record;
+# it never recomputes pipeline health itself.
+PIPELINE_STATUS_PATH = (
+    Path(__file__).resolve().parent.parent / "logs" / "pipeline_status_latest.json"
+)
 
 
 class NetworkService:
@@ -659,5 +670,206 @@ class NetworkService:
                     "logic without changing the API "
                     "contract."
                 )
+        }
+
+    def get_pipeline_status(self):
+        """
+        API6 - reads the DE7 quality_check status record verbatim and
+        reshapes it for API/UI consumers. If the DAG has never run, that
+        is reported as unhealthy rather than raising, so the Claude
+        assistant and the dashboard can always ask "can I trust this?".
+        """
+
+        if not PIPELINE_STATUS_PATH.exists():
+
+            return {
+                "healthy": False,
+                "reasons": [
+                    "pipeline has not produced a status "
+                    "record yet (DE7 DAG has not run)"
+                ],
+                "task_status": {},
+            }
+
+        with open(
+            PIPELINE_STATUS_PATH,
+            "r",
+            encoding="utf-8"
+        ) as f:
+
+            record = json.load(f)
+
+        as_of = record.get("as_of")
+
+        freshness_hours = None
+
+        if as_of:
+
+            try:
+
+                as_of_dt = datetime.fromisoformat(
+                    str(as_of).replace("Z", "+00:00")
+                )
+
+                if as_of_dt.tzinfo is None:
+                    as_of_dt = as_of_dt.replace(
+                        tzinfo=timezone.utc
+                    )
+
+                freshness_hours = round(
+                    (
+                        datetime.now(timezone.utc) - as_of_dt
+                    ).total_seconds() / 3600,
+                    2
+                )
+
+            except (ValueError, TypeError):
+
+                freshness_hours = None
+
+        return {
+            "healthy": bool(record.get("healthy", False)),
+            "reasons": record.get("reasons", []),
+            "run_id": record.get("run_id"),
+            "run_timestamp": record.get("run_ts"),
+            "generated_at": record.get("generated_at"),
+            "task_status": record.get("per_task_status", {}),
+            "rows_in": record.get("rows_in"),
+            "rows_rejected": record.get("rows_rejected"),
+            "nulls_handled": record.get("nulls_handled"),
+            "rows_published": record.get("rows_published"),
+            "as_of": as_of,
+            "freshness_hours": freshness_hours,
+        }
+
+    def get_grid_location(
+        self,
+        grid_id: int
+    ):
+        """
+        API6 - geographic location for one grid. Reads centroid_latitude/
+        centroid_longitude/geometry_reference from dim_grid, which was
+        populated by joining on properties.cellId (SQL_load_verify/
+        load_to_sql.py), never the 0-based GeoJSON feature index.
+        """
+
+        if grid_id < 1 or grid_id > 10000:
+
+            raise HTTPException(
+                status_code=404,
+                detail="Unknown grid"
+            )
+
+        with self.engine.connect() as connection:
+
+            row = connection.execute(
+                text(
+                    """
+                    SELECT
+                        grid_id,
+                        centroid_latitude,
+                        centroid_longitude,
+                        geometry_reference
+                    FROM dim_grid
+                    WHERE grid_id = :grid_id
+                    """
+                ),
+                {
+                    "grid_id": grid_id
+                }
+            ).mappings().first()
+
+        if row is None:
+
+            raise HTTPException(
+                status_code=404,
+                detail="Unknown grid"
+            )
+
+        return {
+            "grid_id": row["grid_id"],
+            "centroid_latitude": float(row["centroid_latitude"]),
+            "centroid_longitude": float(row["centroid_longitude"]),
+            "geometry_reference": row["geometry_reference"],
+        }
+
+    def get_top_movers(
+        self,
+        limit: int = 10,
+        as_of=None
+    ):
+        """
+        C5 - grids with the sharpest activity increase against baseline.
+
+        Reuses the ML2 activity_growth column in grid_features (computed
+        from a trailing window ending at t, baseline excludes the current
+        interval) rather than a third baseline implementation. No ranking
+        or growth math happens on the client - this is server-side, as
+        the RE-phase rule requires.
+        """
+
+        with self.engine.connect() as connection:
+
+            if as_of is None:
+
+                as_of = connection.execute(
+                    text(
+                        """
+                        SELECT MAX(feature_timestamp)
+                        FROM grid_features
+                        """
+                    )
+                ).scalar()
+
+            rows = connection.execute(
+                text(
+                    """
+                    SELECT
+                        grid_id,
+                        avg_activity,
+                        activity_growth
+                    FROM grid_features
+                    WHERE feature_timestamp = :as_of
+                    ORDER BY activity_growth DESC
+                    LIMIT :limit
+                    """
+                ),
+                {
+                    "as_of": as_of,
+                    "limit": limit
+                }
+            ).mappings().all()
+
+        top_movers = []
+
+        for row in rows:
+
+            growth = float(row["activity_growth"])
+
+            current_activity = float(row["avg_activity"])
+
+            denominator = 1 + growth
+
+            baseline_activity = (
+                current_activity / denominator
+                if denominator not in (0, 0.0)
+                else None
+            )
+
+            top_movers.append(
+                {
+                    "grid_id": row["grid_id"],
+                    "current_activity": current_activity,
+                    "baseline_activity": baseline_activity,
+                    "growth": growth,
+                    # Attention language only - never "congested"
+                    # (project terminology rule).
+                    "label": "sharp increase vs baseline",
+                }
+            )
+
+        return {
+            "as_of": as_of,
+            "top_movers": top_movers,
         }
 

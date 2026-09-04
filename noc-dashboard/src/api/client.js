@@ -76,3 +76,11 @@ export function fetchPipelineStatus() {
 export function fetchGridLocation(gridId) {
   return apiFetch(`/network/grid/${gridId}/location`);
 }
+
+// ── C5 (additive) ───────────────────────────────────────────────────────
+export function fetchTopMovers({ limit = 10, asOf } = {}) {
+  const p = new URLSearchParams();
+  if (limit) p.set('limit', limit);
+  if (asOf) p.set('as_of', asOf);
+  return apiFetch(`/network/top-movers?${p}`);
+}

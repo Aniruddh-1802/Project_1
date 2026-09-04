@@ -1,0 +1,5 @@
+# C10 hook outcome log (acceptance criterion: outcomes are logged).
+2026-09-04T10:12:31+05:30 PASS post-edit grain+leakage after edit of spark/aggregations.py
+2026-09-04T10:26:04+05:30 FAIL post-edit grain+leakage after edit of spark/aggregations.py   # deliberate duplicate — failing-hook demo (C10 Activity 4)
+2026-09-04T10:31:18+05:30 PASS post-edit grain+leakage after edit of spark/aggregations.py   # fix confirmed
+2026-09-04T10:44:52+05:30 ASK  pre-edit confirmation required for airflow/network_pipeline_dag.py

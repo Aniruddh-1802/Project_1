@@ -1,0 +1,11 @@
+# Modules that are imported by de2_ingestion or invoked by the DAGs,
+# but are not DAG files themselves - some import pyspark/pandas/pyarrow/
+# pymysql, which are installed on the Windows interpreter only and are
+# not present in the WSL airflow-env. Airflow (WSL) must not parse them.
+de2_ingestion\.py
+de6_warehouse\.py
+de7_collect_metrics\.py
+_original
+_superseded
+docs
+tests

@@ -172,3 +172,71 @@ class RiskPredictionResponse(BaseModel):
     model_version: str
 
     explanation_note: str
+
+
+# ── API6: pipeline status & grid location ──────────────────────────────────
+
+class PipelineStatusResponse(BaseModel):
+    """Reshapes the DE7 quality_check status record for API/UI consumers.
+
+    Source of truth is logs/pipeline_status_latest.json, written by the
+    Airflow DE7 DAG. This endpoint never recomputes health independently -
+    it reads and reshapes that one record (two sources of truth for health
+    is worse than none)."""
+
+    healthy: bool
+
+    reasons: list[str] = []
+
+    run_id: Optional[str] = None
+
+    run_timestamp: Optional[str] = None
+
+    generated_at: Optional[str] = None
+
+    task_status: dict[str, str] = {}
+
+    rows_in: Optional[int] = None
+
+    rows_rejected: Optional[int] = None
+
+    nulls_handled: Optional[int] = None
+
+    rows_published: Optional[int] = None
+
+    as_of: Optional[datetime] = None
+
+    freshness_hours: Optional[float] = None
+
+
+class GridLocationResponse(BaseModel):
+
+    grid_id: int
+
+    centroid_latitude: float
+
+    centroid_longitude: float
+
+    geometry_reference: str
+
+
+# ── C5: top movers (additive; reuses the ML2 activity_growth baseline) ─────
+
+class TopMoverItem(BaseModel):
+
+    grid_id: int
+
+    current_activity: float
+
+    baseline_activity: Optional[float] = None
+
+    growth: float
+
+    label: str
+
+
+class TopMoversResponse(BaseModel):
+
+    as_of: datetime
+
+    top_movers: list[TopMoverItem]

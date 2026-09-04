@@ -1,0 +1,33 @@
+# C15 — CI: tests FIRST, Claude review IN ADDITION, human approval OUTSIDE.
+name: claude-engineering-review
+on: [pull_request]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }   # Lab 0: 3.10/3.11, wheels lag newer releases
+      - run: pip install -r requirements.txt
+      # Standard tests run first — Claude reviews in addition, never instead (C15 rule 1)
+      - run: python -m pytest tests/ -q | tee test-results.txt
+      - uses: actions/upload-artifact@v4
+        with: { name: test-results, path: test-results.txt }
+
+  claude-review:
+    needs: tests          # review only after real tests have run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/download-artifact@v4
+        with: { name: test-results }
+      - run: pip install anthropic
+      - env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python ci/claude_review.py
+      # The report is a PR comment. There is NO approve/merge/deploy step here —
+      # deployment and manual approval stay with humans (acceptance criterion).
+      - uses: actions/upload-artifact@v4
+        with: { name: claude-review-report, path: claude-review-report.md }
